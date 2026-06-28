@@ -1,356 +1,522 @@
 app:
-  name: "智能电子工程学习助手 Agent"
-  description: "基于RAG+多工具调用的电子工程AI助教，支持电路分析、信号处理、单片机开发"
-  mode: "advanced-chat"
-  icon: "🔌"
-
-# ============================================================
-# Agent 核心理念：
-#   感知层(意图识别) → 决策层(路由) → 执行层(工具调用) → 输出层(解释)
-# ============================================================
-
+  description: "基于RAG+多工具调用的电子工程AI助教。集成5领域意图识别（电路/信号/单片机/通信/学习），4条专家Agent链，混合检索知识库，支持MATLAB/C代码生成，覆盖深大电子信息工程核心课程。"
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  icon_type: emoji
+  mode: advanced-chat
+  name: 智能电子工程学习助手 Agent
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/deepseek:0.0.17@f7a5c1d222d17ee419b17a80d6e4923838fe93788dc724a3af73fbc6990b3a32
+    version: null
+kind: app
+version: "0.6.0"
 workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions: [.JPG, .JPEG, .PNG, .GIF, .WEBP, .SVG]
+      allowed_file_types: [image]
+      allowed_file_upload_methods: [local_file, remote_url]
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        file_upload_limit: 50
+        image_file_size_limit: 10
+        single_chunk_attachment_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: |
+      👋 你好！我是电子工程学习助手，深圳大学电信学院AI助教。
+
+      我可以帮你：
+      ⚡ 电路分析 — 模拟/数字电路、放大器、滤波器
+      📊 信号处理 — FFT、频谱分析、采样、MATLAB
+      🔌 单片机开发 — STM32、C语言、传感器、中断
+      📡 通信原理 — 调制解调、高频电路、5G
+      📚 学习规划 — 课程规划、考研指导、论文写作
+
+      抛出你的问题吧！👇
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
   graph:
-    # ---- 节点定义 ----
+    edges:
+    - data:
+        sourceType: start
+        targetType: llm
+      id: start-classifier
+      source: start-node
+      sourceHandle: source
+      target: classifier-node
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        sourceType: llm
+        targetType: knowledge-retrieval
+      id: classifier-knowledge
+      source: classifier-node
+      sourceHandle: source
+      target: knowledge-node
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: knowledge-circuit
+      source: knowledge-node
+      sourceHandle: source
+      target: circuit-node
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: knowledge-signal
+      source: knowledge-node
+      sourceHandle: source
+      target: signal-node
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: knowledge-mcu
+      source: knowledge-node
+      sourceHandle: source
+      target: mcu-node
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: knowledge-comm
+      source: knowledge-node
+      sourceHandle: source
+      target: comm-node
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: knowledge-general
+      source: knowledge-node
+      sourceHandle: source
+      target: general-node
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        sourceType: llm
+        targetType: llm
+      id: circuit-answer
+      source: circuit-node
+      sourceHandle: source
+      target: integrator
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        sourceType: llm
+        targetType: llm
+      id: signal-answer
+      source: signal-node
+      sourceHandle: source
+      target: integrator
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        sourceType: llm
+        targetType: llm
+      id: mcu-answer
+      source: mcu-node
+      sourceHandle: source
+      target: integrator
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        sourceType: llm
+        targetType: llm
+      id: comm-answer
+      source: comm-node
+      sourceHandle: source
+      target: integrator
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        sourceType: llm
+        targetType: llm
+      id: general-answer
+      source: general-node
+      sourceHandle: source
+      target: integrator
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        sourceType: llm
+        targetType: answer
+      id: answer-end
+      source: integrator
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
     nodes:
-
-      # ① 入口：提取用户问题
-      - id: start
+    - data:
+        desc: ""
+        title: 用户输入
         type: start
-        data:
-          title: "用户输入"
-          variables:
-            - variable: query
-              type: paragraph
-              label: "你的电子工程问题"
-
-      # ② 意图分类器：判断问题类型
-      - id: classifier
+        variables: []
+      height: 72
+      id: start-node
+      position:
+        x: 80
+        y: 300
+      positionAbsolute:
+        x: 80
+        y: 300
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        model:
+          completion_params:
+            temperature: 0.1
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+          - id: 76e0f9c8-105a-4b9b-9031-8fbb7a70d66e
+            role: system
+            text: "你是一个电子工程问题分类器。根据用户输入判断问题属于哪个类别。\n只输出类别编号，不要输出其他任何内容。\n\n类别列表：\n1 - 电路分析（模拟电路、数字电路、电路定理、放大器、滤波器）\n2 - 信号处理（信号与系统、FFT、频谱分析、采样定理、MATLAB）\n3 - 单片机开发（STM32、C语言、嵌入式、GPIO、中断、传感器）\n4 - 通信原理（调制解调、信道编码、高频电子线路）\n5 - 通用学习问题（学习方法、课程规划、论文写作）\n\n用户问题：{{#sys.query#}}\n\n输出（只输出数字1-5）："
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ""
+        memory:
+          query_prompt_template: "{{#sys.query#}}"
+          role_prefix:
+            assistant: ""
+            user: ""
+          window:
+            enabled: false
+            size: 10
+        vision:
+          enabled: false
+        variables: []
+        title: 意图识别
         type: llm
-        data:
-          title: "意图识别"
-          model:
-            provider: openai
-            name: gpt-4o-mini
-          prompt_template: |
-            你是一个电子工程问题分类器。根据用户输入判断问题属于哪个类别。
-            只输出类别编号，不要输出其他内容。
-
-            类别列表：
-            1 - 电路分析（模拟电路、数字电路、电路定理、放大器、滤波器）
-            2 - 信号处理（信号与系统、FFT、频谱分析、采样定理、MATLAB）
-            3 - 单片机开发（STM32、C语言、嵌入式、GPIO、中断、传感器）
-            4 - 通信原理（调制解调、信道编码、高频电子线路）
-            5 - 通用学习问题（学习方法、课程规划、论文写作）
-
-            用户问题：{{#start.query#}}
-
-            输出（只输出数字1-5）：
-
-      # ③ RAG 知识库检索节点
-      - id: knowledge_retrieval
-        type: knowledge-retrieval
-        data:
-          title: "知识库检索"
-          query_variable_selector: ["start", "query"]
-          dataset_ids: []  # 导入后在Dify中绑定知识库
-          retrieval_mode: "hybrid"  # 混合检索（关键词 + 向量）
+      height: 90
+      id: classifier-node
+      position:
+        x: 400
+        y: 300
+      positionAbsolute:
+        x: 400
+        y: 300
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        dataset_ids: []
+        desc: ""
+        multiple_retrieval_config:
+          reranking_enable: true
+          reranking_mode: reranking_model
+          reranking_model:
+            model: ""
+            provider: ""
           top_k: 5
           score_threshold: 0.6
-          rerank_enable: true
-
-      # ④-A 电路分析处理链
-      - id: circuit_chain
+        query_variable_selector: ["sys", "query"]
+        retrieval_mode: multiple
+        title: 知识库检索
+        type: knowledge-retrieval
+      height: 90
+      id: knowledge-node
+      position:
+        x: 720
+        y: 300
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        model:
+          completion_params:
+            temperature: 0.3
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+          - id: 4b8f190b-fc83-4024-b045-ddf65097ea07
+            role: system
+            text: "# 角色\n你是深圳大学电子信息工程专业的AI助教，专精于电路分析。回答风格：严谨但不死板，喜欢用类比帮助理解。\n\n# 知识库参考\n{{#knowledge-node.result#}}\n\n# 用户问题\n{{#sys.query#}}\n\n# 要求\n1. 先判断问题难度（基础/进阶/高阶）\n2. 用逐步推理的方式解答，每步标注原理依据\n3. 如果适合用MATLAB验证，给出可运行的代码片段\n4. 最后给出1个相关练习题供用户自测\n5. 如果知识库没有相关材料，诚实说明并尽量给出通用解答\n\n# 输出格式\n## 📊 难度评估\n## 🔍 逐步分析\n## 💻 MATLAB验证（如适用）\n## 📝 拓展练习"
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ""
+        memory:
+          query_prompt_template: "{{#sys.query#}}"
+          role_prefix:
+            assistant: ""
+            user: ""
+          window:
+            enabled: false
+            size: 10
+        vision:
+          enabled: false
+        variables: []
+        title: 电路分析专家
         type: llm
-        data:
-          title: "电路分析专家"
-          model:
-            provider: openai
-            name: gpt-4o
-          prompt_template: |
-            # 角色
-            你是深圳大学电子信息工程专业的AI助教，专精于电路分析。
-            你的回答风格：严谨但不死板，喜欢用类比帮助理解。
-
-            # 知识库参考
-            {{#knowledge_retrieval.result#}}
-
-            # 用户问题
-            {{#start.query#}}
-
-            # 要求
-            1. 先判断问题难度（基础/进阶/高阶）
-            2. 用逐步推理的方式解答，每步标注原理依据
-            3. 如果适合用MATLAB验证，给出可运行的代码片段
-            4. 最后给出1个相关练习题供用户自测
-            5. 如果知识库没有相关材料，诚实说明并尽量给出通用解答
-
-            # 输出格式
-            ## 📊 难度评估
-            ## 🔍 逐步分析
-            ## 💻 MATLAB验证（如适用）
-            ## 📝 拓展练习
-
-      # ④-B 信号处理处理链
-      - id: signal_chain
+      height: 90
+      id: circuit-node
+      position:
+        x: 1040
+        y: 100
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        model:
+          completion_params:
+            temperature: 0.3
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+          - id: d28b6193-2745-489a-a370-85c9fecdd3a5
+            role: system
+            text: "# 角色\n你是深圳大学电子信息工程专业的AI助教，专精于信号与系统、数字信号处理。擅长将抽象的数学概念可视化解释。\n\n# 知识库参考\n{{#knowledge-node.result#}}\n\n# 用户问题\n{{#sys.query#}}\n\n# 要求\n1. 用\"物理直觉 → 数学表达 → MATLAB验证\"三步法讲解\n2. 涉及频谱/滤波时，描述MATLAB可视化代码\n3. 将抽象概念（如卷积）用生活例子类比\n4. 推荐课后习题编号（参考教材）\n\n# 输出格式\n## 🧠 直觉理解\n## 📐 数学表达\n## 💻 MATLAB实践\n## 📖 教材参考"
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ""
+        memory:
+          query_prompt_template: "{{#sys.query#}}"
+          role_prefix:
+            assistant: ""
+            user: ""
+          window:
+            enabled: false
+            size: 10
+        vision:
+          enabled: false
+        variables: []
+        title: 信号处理专家
         type: llm
-        data:
-          title: "信号处理专家"
-          model:
-            provider: openai
-            name: gpt-4o
-          prompt_template: |
-            # 角色
-            你是深圳大学电子信息工程专业的AI助教，专精于信号与系统、数字信号处理。
-            擅长将抽象的数学概念可视化解释。
-
-            # 知识库参考
-            {{#knowledge_retrieval.result#}}
-
-            # 用户问题
-            {{#start.query#}}
-
-            # 要求
-            1. 用"物理直觉 → 数学表达 → MATLAB验证"三步法讲解
-            2. 涉及频谱/滤波时，描述MATLAB可视化代码
-            3. 将抽象概念（如卷积）用生活例子类比
-            4. 推荐课后习题编号（参考教材）
-
-            # 输出格式
-            ## 🧠 直觉理解
-            ## 📐 数学表达
-            ## 💻 MATLAB实践
-            ## 📖 教材参考
-
-      # ④-C 单片机开发处理链
-      - id: mcu_chain
+      height: 90
+      id: signal-node
+      position:
+        x: 1040
+        y: 220
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        model:
+          completion_params:
+            temperature: 0.3
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+          - id: b1212074-a921-485d-be81-7f889d32c792
+            role: system
+            text: "# 角色\n你是深圳大学电子信息工程专业的AI助教，专精于STM32单片机开发。注重动手实践，每个回答都给出可运行的代码。\n\n# 知识库参考\n{{#knowledge-node.result#}}\n\n# 用户问题\n{{#sys.query#}}\n\n# 要求\n1. 先画出硬件连接示意图（文字描述）\n2. 给出完整C代码（带注释，标注寄存器含义）\n3. 说明常见坑点和调试方法\n4. 推荐相关外设学习路线\n\n# 输出格式\n## 🔌 硬件连接\n## 💾 C代码实现\n## ⚠️ 注意事项 & 调试技巧\n## 🗺️ 进阶学习路线"
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ""
+        memory:
+          query_prompt_template: "{{#sys.query#}}"
+          role_prefix:
+            assistant: ""
+            user: ""
+          window:
+            enabled: false
+            size: 10
+        vision:
+          enabled: false
+        variables: []
+        title: 单片机开发专家
         type: llm
-        data:
-          title: "单片机开发专家"
-          model:
-            provider: openai
-            name: gpt-4o
-          prompt_template: |
-            # 角色
-            你是深圳大学电子信息工程专业的AI助教，专精于STM32单片机开发。
-            注重动手实践，每个回答都给出可运行的代码。
-
-            # 知识库参考
-            {{#knowledge_retrieval.result#}}
-
-            # 用户问题
-            {{#start.query#}}
-
-            # 要求
-            1. 先画出硬件连接示意图（文字描述）
-            2. 给出完整C代码（带注释，标注寄存器含义）
-            3. 说明常见坑点和调试方法
-            4. 推荐相关外设学习路线
-
-            # 输出格式
-            ## 🔌 硬件连接
-            ## 💾 C代码实现
-            ## ⚠️ 注意事项 & 调试技巧
-            ## 🗺️ 进阶学习路线
-
-      # ④-D 通信原理处理链
-      - id: comm_chain
+      height: 90
+      id: mcu-node
+      position:
+        x: 1040
+        y: 340
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        model:
+          completion_params:
+            temperature: 0.3
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+          - id: b8ac1dca-9505-4d0c-af7c-7e75a7643706
+            role: system
+            text: "# 角色\n你是深圳大学电子信息工程专业的AI助教，专精于通信原理与高频电子线路。善于用框图+公式把复杂系统讲清楚。\n\n# 知识库参考\n{{#knowledge-node.result#}}\n\n# 用户问题\n{{#sys.query#}}\n\n# 要求\n1. 用系统框图展示信号流\n2. 关键公式推导过程清晰\n3. 联系实际通信系统（如4G/5G/WiFi）\n4. 如有MATLAB仿真实例请给出\n\n# 输出格式\n## 📡 系统框架\n## 🧮 关键推导\n## 🌐 实际应用\n## 💻 仿真代码（如适用）"
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ""
+        memory:
+          query_prompt_template: "{{#sys.query#}}"
+          role_prefix:
+            assistant: ""
+            user: ""
+          window:
+            enabled: false
+            size: 10
+        vision:
+          enabled: false
+        variables: []
+        title: 通信原理专家
         type: llm
-        data:
-          title: "通信原理专家"
-          model:
-            provider: openai
-            name: gpt-4o
-          prompt_template: |
-            # 角色
-            你是深圳大学电子信息工程专业的AI助教，专精于通信原理与高频电子线路。
-            善于用框图+公式把复杂系统讲清楚。
-
-            # 知识库参考
-            {{#knowledge_retrieval.result#}}
-
-            # 用户问题
-            {{#start.query#}}
-
-            # 要求
-            1. 用系统框图展示信号流
-            2. 关键公式推导过程清晰
-            3. 联系实际通信系统（如4G/5G/WiFi）
-            4. 如有MATLAB仿真实例请给出
-
-            # 输出格式
-            ## 📡 系统框架
-            ## 🧮 关键推导
-            ## 🌐 实际应用
-            ## 💻 仿真代码（如适用）
-
-      # ④-E 通用学习帮助
-      - id: general_chain
+      height: 90
+      id: comm-node
+      position:
+        x: 1040
+        y: 460
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        model:
+          completion_params:
+            temperature: 0.3
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+          - id: 0cf33267-0f81-4c65-985b-30d563110d08
+            role: system
+            text: "# 角色\n你是深圳大学电子信息工程专业的学习规划师。了解该专业的课程体系、考研方向、就业前景。\n\n# 用户问题\n{{#sys.query#}}\n\n# 要求\n1. 结合深大电信学院实际情况回答\n2. 推荐具体的学习资源和时间规划\n3. 分享学长学姐的成功经验"
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ""
+        memory:
+          query_prompt_template: "{{#sys.query#}}"
+          role_prefix:
+            assistant: ""
+            user: ""
+          window:
+            enabled: false
+            size: 10
+        vision:
+          enabled: false
+        variables: []
+        title: 学习规划助手
         type: llm
-        data:
-          title: "学习规划助手"
-          model:
-            provider: openai
-            name: gpt-4o-mini
-          prompt_template: |
-            # 角色
-            你是深圳大学电子信息工程专业的学习规划师。
-            了解该专业的课程体系、考研方向、就业前景。
-
-            # 用户问题
-            {{#start.query#}}
-
-            # 要求
-            1. 结合深大电信学院实际情况回答
-            2. 推荐具体的学习资源和时间规划
-            3. 分享学长学姐的成功经验
-
-      # ⑤ 代码生成工具节点（MATLAB）
-      - id: matlab_tool
-        type: code
-        data:
-          title: "MATLAB代码执行"
-          code_language: "python3"  # Dify沙箱执行（替代方案）
-          code: |
-            # 注意：此节点在实际部署时用于执行/验证MATLAB等代码逻辑
-            # Dify 云版沙箱支持 Python，可做数值计算验证
-            import numpy as np
-
-            def main(query: str, context: str) -> dict:
-                """执行数值计算验证（替代MATLAB）"""
-                # 这里根据query提取计算需求并执行
-                return {
-                    "result": "计算完成",
-                    "note": "实际部署时可连接MATLAB Engine或使用Python科学计算栈"
-                }
-
-      # ⑥ 回答整合 & 记忆存储
-      - id: answer_synthesizer
+      height: 90
+      id: general-node
+      position:
+        x: 1040
+        y: 580
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        model:
+          completion_params:
+            temperature: 0.2
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+          - id: 95c750c2-78b6-426f-8e9b-102b5409c2d6
+            role: system
+            text: "整合以下分析结果，如果需要补充内容请添加。保持友好、专业的语气。\n\n用户原始问题：{{#sys.query#}}\n问题类别：{{#classifier-node.text#}}\n\n专家回答：\n电路分析：{{#circuit-node.text#}}\n信号处理：{{#signal-node.text#}}\n单片机：{{#mcu-node.text#}}\n通信原理：{{#comm-node.text#}}\n学习规划：{{#general-node.text#}}\n\n整合输出（保留Markdown格式，直接输出最终回答）："
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ""
+        memory:
+          query_prompt_template: "{{#sys.query#}}"
+          role_prefix:
+            assistant: ""
+            user: ""
+          window:
+            enabled: false
+            size: 10
+        vision:
+          enabled: false
+        variables: []
+        title: 回答整合
         type: llm
-        data:
-          title: "回答整合"
-          model:
-            provider: openai
-            name: gpt-4o-mini
-          prompt_template: |
-            整合以下分析结果，如果需要补充内容请添加。
-            保持友好、专业的语气。
-
-            用户原始问题：{{#start.query#}}
-            问题类别：{{#classifier.text#}}
-
-            专家回答：
-            {{#circuit_chain.text#}}
-            {{#signal_chain.text#}}
-            {{#mcu_chain.text#}}
-            {{#comm_chain.text#}}
-            {{#general_chain.text#}}
-
-            整合输出（保留Markdown格式，直接输出最终回答）：
-
-    # ---- 边定义（节点之间的连接） ----
-    edges:
-      # 入口 → 意图分类
-      - source: start
-        target: classifier
-        data:
-          title: "提交分析"
-
-      # 意图分类 → 知识库检索（始终先检索）
-      - source: classifier
-        target: knowledge_retrieval
-        data:
-          title: "检索知识库"
-
-      # 知识库检索 → 根据分类路由到不同专家链
-      - source: knowledge_retrieval
-        target: circuit_chain
-        data:
-          title: "类别1：电路分析"
-          condition:
-            type: "if-else"
-            conditions:
-              - comparison_operator: "contains"
-                value: "1"
-                variable_selector: ["classifier", "text"]
-
-      - source: knowledge_retrieval
-        target: signal_chain
-        data:
-          title: "类别2：信号处理"
-          condition:
-            type: "if-else"
-            conditions:
-              - comparison_operator: "contains"
-                value: "2"
-                variable_selector: ["classifier", "text"]
-
-      - source: knowledge_retrieval
-        target: mcu_chain
-        data:
-          title: "类别3：单片机"
-          condition:
-            type: "if-else"
-            conditions:
-              - comparison_operator: "contains"
-                value: "3"
-                variable_selector: ["classifier", "text"]
-
-      - source: knowledge_retrieval
-        target: comm_chain
-        data:
-          title: "类别4：通信原理"
-          condition:
-            type: "if-else"
-            conditions:
-              - comparison_operator: "contains"
-                value: "4"
-                variable_selector: ["classifier", "text"]
-
-      - source: knowledge_retrieval
-        target: general_chain
-        data:
-          title: "类别5：通用学习"
-          condition:
-            type: "if-else"
-            conditions:
-              - comparison_operator: "contains"
-                value: "5"
-                variable_selector: ["classifier", "text"]
-
-      # 所有专家链 → 回答整合
-      - source: circuit_chain
-        target: answer_synthesizer
-      - source: signal_chain
-        target: answer_synthesizer
-      - source: mcu_chain
-        target: answer_synthesizer
-      - source: comm_chain
-        target: answer_synthesizer
-      - source: general_chain
-        target: answer_synthesizer
-
-# ============================================================
-# 对话开场白
-# ============================================================
-conversation_opener: |
-  👋 你好！我是**电子工程学习助手**，深圳大学电信学院AI助教。
-
-  我可以帮你：
-  - ⚡ **电路分析** — 模拟/数字电路、放大器、滤波器
-  - 📊 **信号处理** — FFT、频谱分析、采样、MATLAB
-  - 🔌 **单片机开发** — STM32、C语言、传感器、中断
-  - 📡 **通信原理** — 调制解调、高频电路、5G
-  - 📚 **学习规划** — 课程规划、考研指导、论文写作
-
-  抛出你的问题吧！👇
-
-# ============================================================
-# 推荐模型配置
-# ============================================================
-recommended_models:
-  classifier: "gpt-4o-mini"    # 分类任务，便宜快速
-  expert: "gpt-4o"             # 专家回答，需要深度推理
-  synthesizer: "gpt-4o-mini"   # 整合任务，轻量即可
-  # 备选：claude-sonnet-4-6 用于需要长文推理的场景
-  # 成本优化：所有节点可换 deepseek-chat
+      height: 90
+      id: integrator
+      position:
+        x: 1360
+        y: 300
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: "{{#integrator.text#}}"
+        title: 直接回复
+        type: answer
+        variables: []
+      height: 72
+      id: answer
+      position:
+        x: 1680
+        y: 300
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    viewport:
+      x: 0
+      y: 0
+      zoom: 0.8
+  rag_pipeline_variables: []
