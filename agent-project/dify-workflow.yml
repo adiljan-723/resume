@@ -549,7 +549,7 @@ workflow:
       type: custom
       width: 242
     - data:
-        answer: "{{#evaluator.text#}}"
+        answer: "{{#integrator.text#}}"
         title: 直接回复
         type: answer
         variables: []
