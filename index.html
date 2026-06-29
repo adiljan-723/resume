@@ -1108,7 +1108,7 @@ a { color: var(--accent2); text-decoration: none; }
       }
       // Ollama项目：弹窗含视频播放器
       if(key === 'ollama') {
-        const vidPath = 'C:\\\\Users\\\\86178\\\\Videos\\\\Captures\\\\ollama＋anythingLLM.mp4';
+        const vidPath = 'videos/ollama-showcase.mp4';
         modalContent.innerHTML = `<h3>${data.title}</h3><p class="m-tech">${data.tech}</p><p class="m-desc">${data.desc}</p><ul class="m-features">${data.features.map(f=>`<li>${f}</li>`).join('')}</ul><div class="m-video-section"><div class="m-video-title">🎬 产品演示</div><div class="m-video-wrap"><video controls src="${vidPath}" preload="metadata"><p>您的浏览器不支持视频播放。视频位置：${vidPath}</p></video></div><button class="m-demo-btn" onclick="window.open('${vidPath}', '_blank')">▶ 打开视频文件播放</button></div>${data.link!=='#'?`<a class="m-link" href="${data.link}" target="_blank" rel="noopener">🔗 查看项目文档</a>`:''}`;
         modalOverlay.classList.add('open'); document.body.style.overflow='hidden';
         return;
