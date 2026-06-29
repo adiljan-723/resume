@@ -187,9 +187,19 @@ workflow:
       zIndex: 0
     - data:
         sourceType: llm
-        targetType: answer
-      id: answer-end
+        targetType: llm
+      id: integrator-evaluator
       source: integrator
+      sourceHandle: source
+      target: evaluator
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        sourceType: llm
+        targetType: answer
+      id: evaluator-answer
+      source: evaluator
       sourceHandle: source
       target: answer
       targetHandle: target
@@ -502,14 +512,51 @@ workflow:
       type: custom
       width: 242
     - data:
-        answer: "{{#integrator.text#}}"
+        model:
+          completion_params:
+            temperature: 0.1
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+          - id: eval-prompt
+            role: system
+            text: "# 角色\n你是 AI 回答质量评审官。对以下回答进行客观评分，必须严格按格式输出。\n\n# 用户问题\n{{#sys.query#}}\n\n# Agent回答\n{{#integrator.text#}}\n\n# 评分标准\n1. 准确性（1-5星）：回答是否有事实错误？知识点是否正确引用？\n2. 完整性（1-5星）：是否覆盖问题的所有要点？有无遗漏关键步骤？\n3. 可用性（1-5星）：代码/公式是否可直接复制使用？格式是否规范？\n4. 成本效率（1-5星）：回答是否精炼？有无冗余废话？\n\n# 输出格式（严格遵循，不要添加其他内容）\n📊 质量报告\n准确性：⭐×N  | 一句话理由\n完整性：⭐×N  | 一句话理由\n可用性：⭐×N  | 一句话理由\n成本：⭐×N  | 一句话理由\n综合：N/20\n建议：一句话改进建议"
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ""
+        memory:
+          query_prompt_template: "{{#sys.query#}}"
+          role_prefix:
+            assistant: ""
+            user: ""
+          window:
+            enabled: false
+            size: 10
+        vision:
+          enabled: false
+        variables: []
+        title: 质量评测
+        type: llm
+      height: 90
+      id: evaluator
+      position:
+        x: 1640
+        y: 300
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: "{{#evaluator.text#}}"
         title: 直接回复
         type: answer
         variables: []
       height: 72
       id: answer
       position:
-        x: 1680
+        x: 1920
         y: 300
       sourcePosition: right
       targetPosition: left
