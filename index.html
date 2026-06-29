@@ -1101,15 +1101,17 @@ a { color: var(--accent2); text-decoration: none; }
       const key = card.getAttribute('data-project');
       const data = projectData[key];
       if(!data)return;
-      // Agent项目：直接跳转到Dify对话界面
-      if(key === 'agent' && data.link !== '#') {
-        window.open(data.link, '_blank', 'noopener');
+      // Agent项目：弹窗含视频+在线体验
+      if(key === 'agent') {
+        const agentVid = 'videos/agent-showcase.mp4';
+        modalContent.innerHTML = `<h3>${data.title}</h3><p class="m-tech">${data.tech}</p><p class="m-desc">${data.desc}</p><ul class="m-features">${data.features.map(f=>`<li>${f}</li>`).join('')}</ul><div class="m-video-section"><div class="m-video-title">🎬 产品演示</div><div class="m-video-wrap"><video controls src="${agentVid}" preload="metadata"><p>视频加载中，请稍候...</p></video></div></div><a class="m-demo-btn" href="${data.link}" target="_blank" rel="noopener">🤖 在线体验 Agent</a>`;
+        modalOverlay.classList.add('open'); document.body.style.overflow='hidden';
         return;
       }
       // Ollama项目：弹窗含视频播放器
       if(key === 'ollama') {
         const vidPath = 'videos/ollama-showcase.mp4';
-        modalContent.innerHTML = `<h3>${data.title}</h3><p class="m-tech">${data.tech}</p><p class="m-desc">${data.desc}</p><ul class="m-features">${data.features.map(f=>`<li>${f}</li>`).join('')}</ul><div class="m-video-section"><div class="m-video-title">🎬 产品演示</div><div class="m-video-wrap"><video controls src="${vidPath}" preload="metadata"><p>您的浏览器不支持视频播放。视频位置：${vidPath}</p></video></div><button class="m-demo-btn" onclick="window.open('${vidPath}', '_blank')">▶ 打开视频文件播放</button></div>${data.link!=='#'?`<a class="m-link" href="${data.link}" target="_blank" rel="noopener">🔗 查看项目文档</a>`:''}`;
+        modalContent.innerHTML = `<h3>${data.title}</h3><p class="m-tech">${data.tech}</p><p class="m-desc">${data.desc}</p><ul class="m-features">${data.features.map(f=>`<li>${f}</li>`).join('')}</ul><div class="m-video-section"><div class="m-video-title">🎬 产品演示</div><div class="m-video-wrap"><video controls src="${vidPath}" preload="metadata"><p>视频加载中，请稍候...</p></video></div></div>${data.link!=='#'?`<a class="m-link" href="${data.link}" target="_blank" rel="noopener">🔗 查看项目文档</a>`:''}`;
         modalOverlay.classList.add('open'); document.body.style.overflow='hidden';
         return;
       }
