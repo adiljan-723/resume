@@ -546,6 +546,23 @@ a { color: var(--accent2); text-decoration: none; }
   .section { padding: 52px 18px; }
   .section-title { font-size: 24px; }
 }
+  .hero-travel-link { display: inline-block; margin-top: 10px; padding: 8px 12px; color: var(--accent2); font-size: 13px; font-weight: 650; text-decoration: none; }
+  .hero-travel-link:hover { text-decoration: underline; }
+  .travel-feature { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: 24px; align-items: center; padding: clamp(20px, 4vw, 30px); background: linear-gradient(120deg, var(--accent-glow), transparent 64%), var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--gold); border-radius: var(--radius); }
+  .travel-feature h3 { color: var(--text); margin: 5px 0 8px; font-size: clamp(20px, 3vw, 25px); }
+  .travel-feature p { color: var(--text2); font-size: 14px; line-height: 1.65; }
+  .travel-feature .travel-kicker { color: var(--gold); font-size: 12px; font-weight: 700; }
+  .travel-feature .travel-stack { margin-top: 10px; color: var(--accent2); font-size: 12px; font-weight: 650; }
+  .travel-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin-top: 15px; }
+  .travel-actions a { color: var(--accent2); font-size: 13px; font-weight: 650; text-decoration: none; }
+  .travel-actions .travel-primary { padding: 8px 12px; background: var(--accent); border-radius: 8px; color: white; }
+  .travel-actions a:hover, .travel-sample:hover strong { text-decoration: underline; }
+  .travel-sample { display: block; padding: 16px; background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; text-decoration: none; }
+  .travel-sample span, .travel-sample strong { display: block; }
+  .travel-sample span { color: var(--text2); font-size: 12px; }
+  .travel-sample strong { color: var(--text); margin: 4px 0; font-size: 15px; }
+  .travel-feature a:focus-visible, .hero-travel-link:focus-visible { outline: 2px solid var(--accent2); outline-offset: 4px; }
+  @media (max-width: 620px) { .travel-feature { grid-template-columns: 1fr; gap: 14px; } }
 </style>
 </head>
 <body>
@@ -590,6 +607,7 @@ a { color: var(--accent2); text-decoration: none; }
     <div class="typewriter-wrap">
       <span class="typing" id="typewriter"></span><span class="cursor"></span>
     </div>
+    <a class="hero-travel-link" href="travel/">体验我的旅行 Agent <span aria-hidden="true">↗</span></a>
   </div>
   <div class="hero-scroll-hint">
     <div class="mouse"></div>
@@ -730,6 +748,23 @@ a { color: var(--accent2); text-decoration: none; }
   <span class="section-badge">05 · 项目</span>
   <h2 class="section-title">技术<span class="hl">作品</span></h2>
   <div class="projects-grid">
+    <article class="travel-feature" aria-labelledby="travel-feature-title">
+      <div>
+        <p class="travel-kicker">特色项目 · Agent 工程</p>
+        <h3 id="travel-feature-title">AI 旅行规划助手</h3>
+        <p>把目的地、预算和步行偏好整理成可调整的逐日行程，并保留地点与路线的查询依据。</p>
+        <p class="travel-stack">Python · DeepSeek · MCP · 高德地图</p>
+        <div class="travel-actions">
+          <a class="travel-primary" href="travel/">打开规划页 <span aria-hidden="true">→</span></a>
+          <a href="travel/#engineering">查看工程设计</a>
+        </div>
+      </div>
+      <a class="travel-sample" href="travel/?scenario=shenzhen#request">
+        <span>推荐起点 · 可编辑示例</span>
+        <strong>深圳周末两日游 <span aria-hidden="true" style="display:inline">↗</span></strong>
+        <span>两人同行，看看博物馆，尝尝本地菜，尽量少走路。</span>
+      </a>
+    </article>
     <div class="project-card" data-project="signal"
          onmousemove="this.style.setProperty('--mx', event.offsetX+'px'); this.style.setProperty('--my', event.offsetY+'px')">
       <div class="p-icon">📡</div>

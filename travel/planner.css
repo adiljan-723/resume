@@ -1,0 +1,78 @@
+:root {
+  color-scheme: dark;
+  --bg: #060e1a;
+  --panel: #0f1f3a;
+  --surface: #0b1830;
+  --text: #e4ecf4;
+  --muted: #a0b8d0;
+  --blue: #69b6f5;
+  --gold: #e0b860;
+  --line: #274260;
+  --glow: #092347;
+  font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+}
+[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f4f7fa;
+  --panel: #fff;
+  --surface: #eaf0f6;
+  --text: #0a1f35;
+  --muted: #3a5878;
+  --blue: #0055aa;
+  --gold: #825812;
+  --line: #c1cfdf;
+  --glow: #deebf7;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); line-height: 1.6; }
+button, textarea { font: inherit; }
+button:not(:disabled) { cursor: pointer; }
+a:focus-visible, button:focus-visible, textarea:focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; }
+[hidden] { display: none !important; }
+.site-header { border-bottom: 1px solid var(--line); }
+.header-inner, .page { width: min(100% - 36px, 960px); margin: 0 auto; }
+.header-inner { min-height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.back, .text-link { color: var(--blue); font-weight: 650; text-decoration: none; }
+.back:hover, .text-link:hover { text-decoration: underline; }
+.theme, .examples button { padding: 6px 11px; color: var(--text); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; }
+.theme:hover, .examples button:hover { border-color: var(--blue); }
+.page { padding: 26px 0 50px; }
+.intro { position: relative; overflow: hidden; padding: clamp(24px, 6vw, 52px); border: 1px solid var(--line); border-radius: 16px; background: radial-gradient(ellipse at 83% 60%, var(--glow), transparent 68%), var(--panel); }
+.intro > :not(svg) { position: relative; }
+.route-art { position: absolute; width: min(40%, 320px); height: 100%; right: 16px; top: 0; }
+.route-grid { stroke: var(--line); stroke-width: 1; opacity: .75; }
+.route-line { stroke: var(--blue); stroke-width: 2.5; stroke-dasharray: 4 5; }
+.route-node { fill: var(--panel); stroke: var(--blue); stroke-width: 2; }
+.route-end { fill: var(--gold); stroke: var(--panel); stroke-width: 3; }
+.eyebrow { margin: 0; color: var(--gold); font-size: .77rem; font-weight: 750; letter-spacing: .08em; }
+h1, h2, h3 { line-height: 1.25; }
+h1 { margin: 10px 0 12px; font-size: clamp(2rem, 6vw, 3.4rem); }
+h1 span { color: var(--blue); }
+.intro-copy { max-width: 34ch; margin: 0 0 16px; color: var(--muted); }
+.workspace { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr); gap: 16px; margin: 18px 0 30px; }
+.panel, .design-grid article { border: 1px solid var(--line); border-radius: 12px; background: var(--panel); padding: clamp(17px, 4vw, 24px); }
+h2 { margin: 7px 0 9px; font-size: 1.4rem; }
+.muted { margin: 0 0 14px; color: var(--muted); font-size: .92rem; }
+.examples { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+.examples button { font-size: .83rem; }
+label { display: block; margin-bottom: 5px; font-weight: 650; font-size: .88rem; }
+textarea { width: 100%; min-height: 120px; padding: 10px 12px; resize: vertical; color: var(--text); background: var(--surface); border: 1px solid var(--line); border-radius: 9px; }
+textarea::placeholder { color: var(--muted); }
+.request-footer { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-top: 12px; }
+.submit { padding: 8px 14px; color: var(--muted); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; font-weight: 650; }
+.service-note { color: var(--muted); font-size: .83rem; }
+.service-note span { color: var(--gold); }
+.plan-parts { list-style: none; padding: 0; margin: 0; }
+.plan-parts li { display: flex; gap: 10px; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); }
+.plan-parts li > span { color: var(--blue); font-size: .75rem; font-weight: 700; }
+.plan-parts strong, .plan-parts small { display: block; }
+.plan-parts small { color: var(--muted); }
+.engineering { scroll-margin-top: 16px; }
+.design-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 15px; }
+.design-grid h3 { margin: 0 0 7px; font-size: 1rem; }
+.design-grid p, .project-note { margin: 0; color: var(--muted); font-size: .86rem; }
+.project-note { margin-top: 13px; }
+@media (max-width: 700px) {
+  .workspace, .design-grid { grid-template-columns: 1fr; }
+  .route-art { opacity: .37; right: 0; }
+}
