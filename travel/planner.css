@@ -60,8 +60,32 @@ textarea { width: 100%; min-height: 120px; padding: 10px 12px; resize: vertical;
 textarea::placeholder { color: var(--muted); }
 .request-footer { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-top: 12px; }
 .submit { padding: 8px 14px; color: var(--muted); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; font-weight: 650; }
+.submit:not(:disabled) { color: var(--text); border-color: var(--blue); }
+.submit:not(:disabled):hover { background: var(--glow); }
+.reset { border: 0; background: transparent; padding: 6px 3px; }
 .service-note { color: var(--muted); font-size: .83rem; }
-.service-note span { color: var(--gold); }
+.service-note::before { content: '●'; margin-right: 7px; color: var(--gold); }
+.service-error { color: var(--gold); font-size: .86rem; }
+.dialogue { list-style: none; max-height: 16rem; overflow-y: auto; margin: 0 0 12px; padding: 0; }
+.dialogue li { margin: 0 0 8px; padding: 8px 10px; border-radius: 8px; background: var(--surface); font-size: .86rem; overflow-wrap: anywhere; }
+.dialogue .user { border-left: 2px solid var(--blue); }
+.dialogue .assistant { border-left: 2px solid var(--gold); }
+.requirements, .plan-note { font-size: .85rem; color: var(--muted); overflow-wrap: anywhere; }
+.guide-menu { border-top: 1px solid var(--line); margin-top: 16px; padding-top: 12px; }
+.guide-menu h3 { margin: 0 0 7px; font-size: 1rem; }
+.guide-menu fieldset { margin: 0 0 10px; padding: 0; border: 0; min-inline-size: 0; }
+.guide-option { display: flex; align-items: flex-start; gap: 9px; padding: 9px 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; cursor: pointer; }
+.guide-option input { margin-top: 5px; }
+.guide-option small { display: block; color: var(--muted); font-weight: 400; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.day-plan { border-top: 1px solid var(--line); padding: 10px 0; }
+.day-plan h3 { margin: 0 0 5px; font-size: 1rem; }
+.day-plan ul, #trace-list { padding-left: 1.15rem; font-size: .86rem; overflow-wrap: anywhere; }
+.day-plan li { margin-bottom: 8px; }
+.day-plan li p { margin: 3px 0 0; color: var(--muted); }
+.day-plan button { margin-top: 5px; padding: 3px 8px; font-size: .79rem; }
+#trace { margin-top: 12px; color: var(--muted); }
+#trace summary { color: var(--blue); cursor: pointer; }
 .plan-parts { list-style: none; padding: 0; margin: 0; }
 .plan-parts li { display: flex; gap: 10px; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); }
 .plan-parts li > span { color: var(--blue); font-size: .75rem; font-weight: 700; }

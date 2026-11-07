@@ -21,18 +21,32 @@ try {
 themeButton.hidden = false;
 themeButton.addEventListener('click', () => {
   const next = root.dataset.theme === 'light' ? 'dark' : 'light';
-  setTheme(next);
-  try { localStorage.setItem(themeKey, next); } catch { /* Theme still works for this page. */ }
+  const change = () => {
+    setTheme(next);
+    try { localStorage.setItem(themeKey, next); } catch { /* Theme still works for this page. */ }
+  };
+  if (window.TravelMotion) window.TravelMotion.themeTransition(change, themeButton);
+  else change();
 });
 
 function fillScenario(name) {
   const example = scenarios.get(name);
-  if (example) request.value = example;
+  if (example) {
+    request.value = example;
+    for (const button of examples.querySelectorAll('button')) button.setAttribute('aria-pressed', String(button.dataset.scenario === name));
+    window.TravelMotion?.animate(request, [{transform: 'translateY(3px)', opacity: .6}, {transform: 'translateY(0)', opacity: 1}], {duration: 250});
+    request.dispatchEvent(new Event('input', {bubbles: true}));
+  }
 }
 
 const selected = new URLSearchParams(location.search).get('scenario');
 if (!request.value) fillScenario(selected);
 examples.hidden = false;
+request.addEventListener('input', () => {
+  for (const button of examples.querySelectorAll('button[data-scenario]')) {
+    button.setAttribute('aria-pressed', String(request.value === scenarios.get(button.dataset.scenario)));
+  }
+});
 for (const button of examples.querySelectorAll('button[data-scenario]')) {
   button.addEventListener('click', () => {
     fillScenario(button.dataset.scenario);
