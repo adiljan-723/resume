@@ -159,7 +159,7 @@ function drawRadar() {
   const point=(i,radius)=>{const a=i*Math.PI/3-Math.PI/2;return [cx+Math.cos(a)*radius,cy+Math.sin(a)*radius];};
   ctx.lineWidth=1;
   for(let level=1;level<=5;level++){ctx.beginPath();for(let i=0;i<=6;i++){const [x,y]=point(i%6,r*level/5);if(i)ctx.lineTo(x,y);else ctx.moveTo(x,y);}ctx.strokeStyle=line;ctx.stroke();}
-  for(let i=0;i<6;i++){const [x,y]=point(i,r);ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(x,y);ctx.strokeStyle=line;ctx.stroke();const [tx,ty]=point(i,r+22);ctx.fillStyle=i===radarFocus?gold:ink;ctx.font=(i===radarFocus?'600 ':'')+'11px "Microsoft YaHei",sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(names[i],tx,ty);}
+  for(let i=0;i<6;i++){const [x,y]=point(i,r);ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(x,y);ctx.strokeStyle=line;ctx.stroke();const [tx,ty]=point(i,r+22);ctx.fillStyle=i===radarFocus?gold:ink;ctx.font=(i===radarFocus?'600 ':'450 ')+'12px '+(color.getPropertyValue('--font').trim()||'sans-serif');ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(names[i],tx,ty);}
   ctx.beginPath(); values.forEach((v,i)=>{const [x,y]=point(i,r*v*radarProgress);i?ctx.lineTo(x,y):ctx.moveTo(x,y);});ctx.closePath();ctx.globalAlpha=.17;ctx.fillStyle=blue;ctx.fill();ctx.globalAlpha=1;ctx.strokeStyle=blue;ctx.lineWidth=1.6;ctx.stroke();
   values.forEach((v,i)=>{const [x,y]=point(i,r*v*radarProgress);ctx.beginPath();ctx.arc(x,y,i===radarFocus?6:3.5,0,Math.PI*2);ctx.fillStyle=i===radarFocus?gold:blue;ctx.fill();if(i===radarFocus){ctx.globalAlpha=.15;ctx.beginPath();ctx.arc(x,y,13,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;}});
   radar.dataset.focus=String(radarFocus);
@@ -174,6 +174,7 @@ const skillObserver=new IntersectionObserver(entries=>{if(!entries[0].isIntersec
   let start;const finish=()=>{cancelAnimationFrame(radarRAF);radarProgress=1;drawRadar();};finishers.add(finish);
   function grow(t){start??=t;radarProgress=enabled?1-(1-clamp((t-start)/1100,0,1))**3:1;drawRadar();if(radarProgress<1)radarRAF=requestAnimationFrame(grow);else finishers.delete(finish);}radarRAF=requestAnimationFrame(grow);
 },{threshold:.15}); skillObserver.observe(skills);drawRadar();
+document.fonts?.ready.then(drawRadar);
 
 // Auto Height: measure the inner content, handle resize, cancel rapid reversals.
 function collapsible(host, inner, trigger, expanded) {

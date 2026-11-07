@@ -1,0 +1,225 @@
+@font-face { font-family: 'Resume Sans'; font-style: normal; font-weight: 100 900; font-display: swap; src: url('./fonts/resume-sans-f673940a5f.woff2') format('woff2'); }
+@font-face { font-family: 'Resume Serif'; font-style: normal; font-weight: 200 900; font-display: swap; src: url('./fonts/resume-serif-4f2c417f93.woff2') format('woff2'); }
+@font-face { font-family: 'Inter Variable'; font-style: normal; font-weight: 100 900; font-display: swap; src: url('./fonts/inter-variable-4.1.woff2') format('woff2'); }
+
+/* Font faces are generated below from the local font manifest. */
+
+:root {
+  --font-body: "Inter Variable", "Resume Sans", "PingFang SC", "Microsoft YaHei UI", system-ui, sans-serif;
+  --font-display: "Resume Serif", "Songti SC", "STSong", "SimSun", serif;
+  --font-data: "Inter Variable", "Resume Sans", system-ui, sans-serif;
+  --font: var(--font-body);
+  --type-small: .8125rem;
+  --type-body: .9375rem;
+  --type-lead: 1rem;
+  --type-card-title: 1.1875rem;
+  --type-section: clamp(1.625rem, 3vw, 2.375rem);
+  font-family: var(--font-body);
+  font-optical-sizing: auto;
+  font-synthesis: none;
+  font-kerning: normal;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+}
+[data-theme="dark"] { --text2: #aec0d4; --text3: #879fb8; }
+[data-theme="light"] { --text3: #637d96; }
+body { font-family:var(--font-body); font-size:var(--type-body); font-weight:400; line-height:1.85; letter-spacing:.008em; -webkit-font-smoothing:antialiased; }
+button,input,select,textarea { font-family:var(--font-body); }
+button,a { text-underline-offset:.2em; }
+h1,h2,h3,h4 { font-weight:600; text-wrap:balance; }
+p,li { line-break:strict; }
+strong { font-weight:600; }
+
+/* The main reading axis is shared by headings, cards and controls. */
+.section { padding-block:80px; }
+.section-badge { display:table; margin:0 auto 15px; font-family:var(--font-data); font-size:.6875rem; font-weight:550; line-height:1.6; letter-spacing:.13em; padding:5px 15px; }
+.section-title { display:block; position:relative; margin:0 auto 38px; padding-bottom:21px; font-family:var(--font-display); font-size:var(--type-section); font-weight:600; line-height:1.5; letter-spacing:.025em; text-align:center; }
+.section-title::after { position:absolute; left:50%; bottom:0; translate:-50% 0; width:44px; height:2px; margin:0; border-radius:4px; background:linear-gradient(90deg,var(--accent2),var(--gold-light)); }
+.section-title .hl { margin-inline-start:.12em; }
+.section-title .hl::after { bottom:.03em; }
+
+.hero-content { display:flex; flex-direction:column; align-items:center; text-align:center; }
+.hero-content .school-badge { justify-content:center; gap:10px; font-size:.8125rem; font-weight:500; letter-spacing:.02em; line-height:1.6; padding:8px 19px 8px 13px; }
+.hero-content h1 { width:100%; font-family:var(--font-display); font-size:clamp(2.75rem,6vw,5rem); font-weight:600; letter-spacing:.035em; line-height:1.3; margin:4px 0 17px; }
+.name-line { text-align:center; }
+.name-letter { vertical-align:baseline; }
+.hero-content .subtitle { font-size:1rem; font-weight:450; line-height:1.8; letter-spacing:.26em; padding-inline-start:.26em; }
+.hero-content .major-tag { font-size:.8125rem; font-weight:400; line-height:1.8; letter-spacing:.045em; margin-top:7px; }
+.hero-content .typewriter-wrap { width:100%; min-height:29px; margin-top:15px; }
+.hero-content .typing { font-family:var(--font-body); font-size:.875rem!important; font-weight:400; letter-spacing:.03em; line-height:1.8; }
+.hero-actions { width:100%; gap:12px; margin-top:24px; }
+.hero-action { min-height:46px; min-width:158px; padding:10px 19px; font-size:.875rem; font-weight:550; letter-spacing:.01em; line-height:1.4; }
+.hero-action span { font-family:var(--font-data); font-size:1.125rem; line-height:1; }
+.hero-coordinate { font-family:var(--font-data); font-size:.625rem; font-weight:450; letter-spacing:.14em; line-height:1.9; }
+.hero-scroll-hint span { display:block; font-size:.625rem; line-height:1.6; letter-spacing:.15em; padding-left:.15em; }
+.signal-console { align-items:center; }
+.signal-tabs button { min-height:36px; padding:7px 13px; font-family:var(--font-body); font-size:.8125rem; font-weight:500; line-height:1.5; letter-spacing:.015em; }
+.signal-tempo label { font-family:var(--font-body); font-size:.625rem; font-weight:400; line-height:1.7; letter-spacing:0; }
+.signal-tempo output { font-family:var(--font-data); font-size:.75rem; font-weight:500; font-variant-numeric:tabular-nums; line-height:1.5; text-align:center; }
+
+/* A three-column header keeps the navigation centered independently of labels. */
+.nav-inner { display:grid; grid-template-columns:minmax(130px,1fr) auto minmax(130px,1fr); align-items:center; gap:16px; }
+.nav-brand { justify-self:start; font-family:var(--font-data); font-size:.6875rem; font-weight:650; letter-spacing:.1em; line-height:1.5; }
+.nav-links { justify-self:center; max-width:100%; }
+.nav-links a { display:inline-flex; justify-content:center; align-items:center; font-size:.8125rem; font-weight:450; line-height:1.5; letter-spacing:0; padding:7px 10px; }
+.nav-links a.active { font-weight:600; }
+.nav-right { justify-self:end; align-items:center; }
+.motion-control { font-family:var(--font-body); font-size:.75rem; font-weight:450; line-height:1; min-height:34px; }
+.theme-toggle { font-family:var(--font-data); line-height:1; }
+
+.about-grid { display:flex; flex-direction:column; align-items:center; gap:32px; }
+.about-intro { width:100%; max-width:46rem; margin-inline:auto; font-size:var(--type-lead); font-weight:400; line-height:2; letter-spacing:.012em; text-align:start; text-wrap:pretty; }
+.about-intro strong,.about-intro em { font-weight:550; }
+.highlight-cards { width:min(100%,56rem); grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; }
+.hl-card { display:flex; align-items:center; justify-content:center; min-height:160px; padding:22px 14px; text-align:center; }
+.hl-card .resume-card-body { width:100%; }
+.hl-card .hl-icon { font-size:1.5rem; line-height:1.25; margin-bottom:10px; }
+.hl-card .hl-num { font-family:var(--font-data); font-size:2rem; font-weight:600; line-height:1.35; letter-spacing:-.02em; font-variant-numeric:tabular-nums; }
+.hl-card .hl-label { margin-top:9px; font-size:.75rem; font-weight:400; letter-spacing:.025em; line-height:1.6; }
+
+.skills-layout { width:min(100%,58rem); margin-inline:auto; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:50px; }
+.skill-bar-item .bar-header { font-size:.8125rem; font-weight:500; line-height:1.7; letter-spacing:0; margin-bottom:8px; }
+.skill-bar-item .bar-header .pct { font-family:var(--font-data); font-size:.8125rem; font-weight:550; font-variant-numeric:tabular-nums; }
+.skill-tag-group { justify-content:center; gap:8px; margin-top:23px; }
+.skill-tag { font-size:.75rem; font-weight:450; line-height:1.7; letter-spacing:0; padding:5px 12px; }
+.radar-caption { font-family:var(--font-body); font-size:.6875rem; line-height:1.8; letter-spacing:.035em; text-align:center; }
+.ai-card { padding:28px 23px; }
+.ai-card .ai-icon { font-size:2rem; line-height:1.25; margin-bottom:16px; }
+.ai-card h4 { font-size:1.0625rem; font-weight:600; line-height:1.65; letter-spacing:.015em; margin-bottom:9px; }
+.ai-card p { font-size:.8125rem; font-weight:400; line-height:1.95; text-align:center; text-wrap:pretty; }
+
+.timeline { --timeline-inset:26px; padding-inline:var(--timeline-inset); }
+.tl-item::before { left:calc(11px - var(--timeline-inset) - 6px); }
+.tl-header { flex-direction:column; align-items:center; justify-content:center; gap:9px; text-align:center; margin-bottom:10px; }
+.tl-header h3 { font-size:var(--type-card-title); font-weight:600; line-height:1.65; letter-spacing:.015em; }
+.tl-header .period { font-family:var(--font-data); font-size:.75rem; font-weight:500; line-height:1.6; letter-spacing:.015em; padding:4px 12px; font-variant-numeric:tabular-nums; }
+.tl-org { max-width:38rem; margin-inline:auto; text-align:center; font-size:.8125rem; line-height:1.8; letter-spacing:.01em; }
+.tl-detail-inner { max-width:44rem; margin-inline:auto; padding-top:18px; }
+.tl-detail ul { font-size:.875rem; line-height:1.9; }
+.tl-detail li { line-height:1.95; margin-bottom:9px; }
+.tl-expand-hint { justify-content:center; gap:7px; margin-top:14px; font-size:.75rem; line-height:1.6; }
+
+.project-card { display:flex; flex-direction:column; padding:30px 28px 26px; text-align:center; }
+.project-card .resume-card-body { flex:1; display:flex; flex-direction:column; align-items:stretch; }
+.project-card .p-icon { display:grid; place-items:center; height:43px; margin:0 auto 15px; font-size:2rem; line-height:1; }
+.project-card h3 { font-family:var(--font-body); font-size:var(--type-card-title); font-weight:600; letter-spacing:.008em; line-height:1.6; margin:0 auto 8px; text-align:center; }
+.project-card .p-tech { max-width:34rem; margin:0 auto 14px; font-family:var(--font-data); font-size:.75rem; font-weight:500; line-height:1.85; letter-spacing:.01em; text-align:center; text-wrap:balance; }
+.project-card .p-desc { max-width:32rem; margin-inline:auto; font-size:.875rem; font-weight:400; line-height:1.95; letter-spacing:.008em; text-align:start; text-wrap:pretty; }
+.project-card .p-click-hint { justify-content:center; padding-top:21px; margin-top:auto; font-size:.75rem; line-height:1.7; letter-spacing:.015em; }
+.project-card[data-project="zhiye"]::before { left:50%; translate:-50% 0; }
+.travel-feature h3 { font-family:var(--font-display); font-size:1.625rem; font-weight:600; line-height:1.5; }
+.travel-feature p { font-size:.875rem; line-height:1.9; }
+.travel-feature .travel-kicker { font-size:.75rem; font-weight:500; letter-spacing:.03em; }
+.travel-feature .travel-stack { font-family:var(--font-data); font-size:.75rem; font-weight:500; line-height:1.8; }
+.travel-sample span { font-size:.8125rem; line-height:1.85; }
+.travel-sample strong { font-size:1rem; font-weight:550; line-height:1.7; }
+
+.fitnote-main { text-align:center; }
+.fitnote-main .fn-icon { font-size:2.25rem; line-height:1.3; margin-bottom:15px; }
+.fitnote-main h3 { font-family:var(--font-display); font-size:1.625rem; font-weight:600; line-height:1.5; }
+.fitnote-main .fn-platform { font-size:.75rem; font-weight:500; letter-spacing:.05em; line-height:1.8; margin-top:8px; margin-bottom:17px; }
+.fitnote-main .fn-desc { max-width:34rem; margin-inline:auto; font-size:.875rem; font-weight:400; line-height:1.95; letter-spacing:.008em; text-align:start; text-wrap:pretty; }
+.fn-highlights { justify-content:center; gap:8px; }
+.fn-highlight { font-size:.75rem; font-weight:450; line-height:1.65; padding:5px 12px; }
+.fitnote-ai h4 { justify-content:center; font-size:1rem; font-weight:550; line-height:1.8; letter-spacing:.02em; text-align:center; }
+.ai-model-item .model-name { font-family:var(--font-data); font-size:.875rem; font-weight:550; line-height:1.7; }
+.ai-model-item .model-use { font-size:.75rem; line-height:1.85; margin-top:4px; letter-spacing:0; }
+
+.edu-toggle { position:relative; justify-content:center; padding:27px 54px; text-align:center; }
+.edu-toggle .edu-left { flex-direction:column; justify-content:center; align-items:center; gap:13px; min-width:0; }
+.edu-toggle h3 { font-size:var(--type-card-title); font-weight:600; line-height:1.65; text-align:center; }
+.edu-toggle .edu-meta { display:flex; flex-direction:column; align-items:center; gap:1px; margin-top:7px; font-family:var(--font-data); font-size:.8125rem; font-weight:400; line-height:1.85; letter-spacing:.01em; text-align:center; font-variant-numeric:tabular-nums; }
+.edu-meta > span { white-space:nowrap; }
+.edu-toggle .edu-arrow { position:absolute; top:50%; right:25px; translate:0 -50%; font-family:var(--font-data); font-size:.8125rem; }
+.edu-body-inner { max-width:48rem; margin-inline:auto; padding:0 28px 29px; text-align:center; font-size:.875rem; line-height:1.9; }
+.edu-body-inner .course-row strong { font-size:.8125rem; font-weight:550; line-height:1.85; letter-spacing:.02em; }
+.course-tags { justify-content:center; gap:9px; margin-top:10px; }
+.course-tag { font-size:.75rem; font-weight:400; line-height:1.75; padding:5px 11px; }
+.course-tag.cert { font-weight:500; }
+
+.contact-item { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:164px; padding:24px 12px; text-align:center; }
+.contact-item .c-icon { line-height:1.2; margin-bottom:13px; font-size:1.5rem; }
+.contact-item .c-label { font-size:.6875rem; font-weight:450; line-height:1.6; letter-spacing:.1em; padding-left:.1em; }
+.contact-item .c-value { max-width:100%; margin-top:4px; font-family:var(--font-data); font-size:.8125rem; font-weight:550; line-height:1.8; letter-spacing:0; overflow-wrap:anywhere; word-break:normal; }
+.contact-item .c-hint { margin-top:7px; font-size:.6875rem; line-height:1.7; letter-spacing:.015em; }
+.footer { font-family:var(--font-body); font-size:.75rem; font-weight:400; line-height:2; letter-spacing:.025em; }
+.footer .szu-mark { font-weight:550; }
+
+.modal { padding:30px 34px 32px; }
+.modal-close { margin-bottom:-34px; }
+.modal h3 { padding:0 34px; font-family:var(--font-display); font-size:1.625rem; font-weight:600; line-height:1.6; letter-spacing:.015em; text-align:center; margin:0 auto 8px; }
+.modal .m-tech { margin:0 auto 20px; font-family:var(--font-data); font-size:.75rem; font-weight:500; line-height:1.95; letter-spacing:.015em; text-align:center; text-wrap:balance; }
+.modal .m-desc { margin:0 auto 19px; max-width:36rem; font-size:.9375rem; font-weight:400; line-height:2; letter-spacing:.008em; text-align:start; text-wrap:pretty; }
+.modal .m-features { max-width:36rem; margin-inline:auto; }
+.modal .m-features li { font-size:.875rem; font-weight:400; line-height:1.95; padding-block:11px; letter-spacing:.006em; }
+.modal .m-link,.modal .m-demo-btn { display:flex; justify-content:center; align-items:center; width:fit-content; min-height:44px; margin:18px auto 0; padding:10px 20px; font-size:.875rem; font-weight:550; line-height:1.5; letter-spacing:.01em; }
+.modal .m-video-section .m-video-title { justify-content:center; font-size:.8125rem; font-weight:550; line-height:1.8; letter-spacing:.03em; }
+.copied-toast { font-family:var(--font-body); font-size:.8125rem; font-weight:500; line-height:1.6; }
+.resume-tooltip { font-family:var(--font-body); font-size:.75rem; font-weight:400; line-height:1.8; }
+
+@media(max-width:1100px) {
+ .nav-inner { grid-template-columns:110px minmax(0,1fr) 110px; gap:10px; }
+ .nav-links { overflow-x:auto; scrollbar-width:none; }
+ .nav-links a { padding-inline:9px; font-size:.75rem; }
+}
+@media(max-width:760px) {
+ .section { padding:60px 20px; }
+ .section-title { font-size:1.875rem; line-height:1.55; letter-spacing:.015em; margin-bottom:30px; padding-bottom:18px; }
+ .section-badge { font-size:.625rem; margin-bottom:12px; }
+ .hero { min-height:790px; }
+ .hero-content h1 { font-size:clamp(2.75rem,10.5vw,3.875rem); letter-spacing:.02em; line-height:1.3; }
+ .hero-content .subtitle { font-size:.9375rem; letter-spacing:.14em; padding-left:.14em; }
+ .hero-content .school-badge { font-size:.75rem!important; }
+ .hero-content .typing { font-size:.8125rem!important; }
+ .hero-content .major-tag { font-size:.75rem; letter-spacing:.01em; }
+ .hero-coordinate { font-size:.5625rem; letter-spacing:.07em; }
+ .hero-action { min-width:0; padding:10px 16px; font-size:.8125rem; }
+ .nav-inner { grid-template-columns:26px minmax(0,1fr) auto; gap:8px; }
+ .nav-brand { font-size:0; }
+ .nav-links { justify-self:stretch; }
+ .nav-links a { font-size:.75rem; padding:6px 9px; }
+ .motion-control { width:32px; min-width:32px; font-size:.75rem; }
+ .signal-tabs button { padding:7px 10px; font-size:.75rem; }
+ .signal-tempo label { font-size:.5625rem; }
+ .signal-tempo output { font-size:.6875rem; }
+ .about-intro { font-size:.9375rem; line-height:1.95; }
+ .highlight-cards { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+ .hl-card { min-height:148px; padding:20px 12px; }
+ .hl-card .hl-num { font-size:1.875rem; }
+ .skills-layout { grid-template-columns:minmax(0,1fr); gap:32px; }
+ .skill-bar-item .bar-header { font-size:.8125rem; gap:12px; }
+ .timeline { --timeline-inset:17px; }
+ .tl-item { padding:23px 18px; }
+ .tl-header h3 { font-size:1.0625rem; }
+ .tl-header .period { font-size:.6875rem; }
+ .tl-org { font-size:.75rem; }
+ .tl-detail ul { font-size:.8125rem; }
+ .project-card { padding:28px 23px 24px; }
+ .project-card h3 { font-size:1.125rem; }
+ .project-card .p-tech { font-size:.6875rem; }
+ .project-card .p-desc { font-size:.875rem; }
+ .fitnote-main,.fitnote-ai { padding:26px 23px; }
+ .fitnote-main h3 { font-size:1.5rem; }
+ .fitnote-ai h4 { font-size:.9375rem; }
+ .edu-toggle { padding:25px 38px; }
+ .edu-toggle h3 { font-size:1.0625rem; }
+ .edu-toggle .edu-meta { font-size:.75rem; }
+ .edu-toggle .edu-arrow { right:18px; }
+ .edu-body-inner { padding:0 19px 26px; }
+ .course-tag { font-size:.6875rem; }
+ .contact-grid { gap:12px; }
+ .contact-item { padding:23px 10px; }
+ .contact-item .c-value { font-size:.75rem; }
+ .modal { padding:25px 22px 27px; }
+ .modal h3 { font-size:1.375rem; padding-inline:29px; }
+ .modal .m-tech { font-size:.6875rem; }
+ .modal .m-desc { font-size:.875rem; line-height:1.95; }
+ .modal .m-features li { font-size:.8125rem; }
+}
+@media(max-width:380px) {
+ .section { padding-inline:16px; }
+ .section-title { font-size:1.625rem; }
+ .hero-content h1 { font-size:2.625rem; }
+ .signal-console { padding-inline:10px; }
+ .signal-tabs button { padding-inline:8px; }
+ .hero-action { padding-inline:13px; gap:12px; }
+}

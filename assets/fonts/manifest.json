@@ -1,0 +1,34 @@
+{
+  "content_cjk_characters": 583,
+  "families": [
+    {
+      "family": "Noto Sans SC",
+      "file": "resume-sans-f673940a5f.woff2",
+      "bytes": 242852,
+      "axes": {
+        "wght": [
+          100.0,
+          900.0
+        ]
+      },
+      "source_sha256": "a3041811a78c361b1de50f953c805e0244951c21c5bd412f7232ef0d899af0da"
+    },
+    {
+      "family": "Noto Serif SC",
+      "file": "resume-serif-4f2c417f93.woff2",
+      "bytes": 319104,
+      "axes": {
+        "wght": [
+          200.0,
+          900.0
+        ]
+      },
+      "source_sha256": "050080d9255a86808f2945bffac582b31ef32bc36411ce29563b4961670c66f9"
+    },
+    {
+      "family": "Inter Variable",
+      "file": "inter-variable-4.1.woff2",
+      "bytes": 352240
+    }
+  ]
+}
