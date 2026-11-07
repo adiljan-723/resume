@@ -1,109 +1,16 @@
 <!doctype html>
-<html lang="zh-CN" data-theme="dark">
+<html lang="zh-CN">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="AI 旅行规划助手。按预算、日期和步行偏好准备可调整的逐日行程。">
-  <meta name="travel-api-origin" content="https://concerts-movement-risks-ridge.trycloudflare.com">
-  <title>AI 旅行规划助手 · 阿地力江</title>
-  <link rel="stylesheet" href="./planner.css">
-  <link rel="stylesheet" href="./motion.css">
-  <script src="./motion.js" defer></script>
-  <script src="./planner.js" defer></script>
-  <script src="./live-planner.js" defer></script>
+  <title>智能旅行规划助手 · 项目介绍</title>
+  <script>
+    const local = ['127.0.0.1', 'localhost'].includes(location.hostname);
+    location.replace(local ? './planner.html' : '../?project=travel#projects');
+  </script>
 </head>
 <body>
-  <header class="site-header">
-    <div class="reading-progress" aria-hidden="true"></div>
-    <div class="header-inner">
-      <a class="back" href="../#projects"><span aria-hidden="true">←</span> 返回技术作品</a>
-      <div class="header-controls">
-        <button class="motion-toggle" id="motion-toggle" type="button" hidden aria-pressed="false">暂停动效</button>
-        <button class="theme" id="theme" type="button" hidden>切换亮色</button>
-      </div>
-    </div>
-  </header>
-
-  <main class="page">
-    <section class="intro" aria-labelledby="page-title">
-      <svg class="route-art" viewBox="0 0 320 210" fill="none" aria-hidden="true">
-        <path d="M-30 180 350 75M-30 145 350 40M-30 110 350 5M12 210 150-10M60 225 197-10M108 225 245-10M156 225 293-10M204 225 341-10" class="route-grid"/>
-        <path d="M38 162C76 167 112 146 130 121S166 105 194 107 240 84 264 46" class="route-line"/>
-        <circle cx="38" cy="162" r="7" class="route-node"/><circle cx="130" cy="121" r="6" class="route-node"/>
-        <circle cx="194" cy="107" r="6" class="route-node"/><circle cx="264" cy="46" r="9" class="route-end"/>
-      </svg>
-      <p class="eyebrow"><span class="compass-mark" aria-hidden="true">✧</span> 技术作品 / AGENT 工程</p>
-      <h1 id="page-title"><span class="title-word">AI 旅行</span><span class="title-word">规划助手</span></h1>
-      <p class="intro-copy">从你想去的地方和旅行限制出发，把预算、活动和交通安排整理成一份可以逐日调整的行程。</p>
-      <nav class="page-nav" aria-label="规划页导航">
-        <a href="#request" data-active="true">填写需求</a>
-        <a href="#plan-workspace">查看行程</a>
-        <a href="#engineering">工程设计</a>
-        <span class="nav-highlight" aria-hidden="true"></span>
-      </nav>
-    </section>
-
-    <div class="workspace">
-      <section class="panel" id="request" aria-labelledby="request-title">
-        <p class="eyebrow">01 / 旅行需求</p>
-        <h2 id="request-title">这次想怎么旅行？</h2>
-        <p class="muted">写下城市、天数和预算。同行人的偏好或步行限制也可以一起写。</p>
-        <div class="examples" aria-label="旅行需求示例" hidden>
-          <button type="button" data-scenario="shenzhen">深圳周末两日游</button>
-          <button type="button" data-scenario="hangzhou">杭州三日轻松游</button>
-        </div>
-        <ol class="dialogue" id="dialogue" aria-label="旅行需求对话" hidden></ol>
-        <p class="requirements" id="requirements" hidden></p>
-        <form id="travel-form">
-          <label for="travel-request">你的旅行需求</label>
-          <textarea id="travel-request" rows="5" maxlength="600" placeholder="例如：两人去深圳玩两天，想逛博物馆，尽量少走路。"></textarea>
-          <div class="request-footer">
-            <button type="submit" class="submit" id="send" disabled>发送需求</button>
-            <button type="button" class="submit" id="ask-guide" hidden>导游推荐玩法</button>
-            <button type="button" class="submit" id="generate" disabled aria-describedby="service-note">生成行程</button>
-            <button type="button" class="text-link reset" id="new-trip" hidden>新建会话</button>
-          </div>
-        </form>
-        <p id="service-note" class="service-note" role="status">实时规划服务待接入</p>
-        <p class="project-note" id="trial-info">临时在线试运行 · 服务依赖开发者电脑保持在线，每日共享 120 次模型调用额度。</p>
-        <div class="generation-track" id="generation-track" hidden aria-hidden="true"><span></span></div>
-        <p id="action-error" class="service-error" role="alert" hidden></p>
-        <section id="guide-menu" class="guide-menu" aria-labelledby="guide-title" hidden>
-          <h3 id="guide-title">选一种或几种喜欢的玩法</h3>
-          <p class="muted">这些是根据城市特色生成的主题建议。你选定后，地点和路线会在规划时查询。</p>
-          <fieldset id="guide-options"><legend class="sr-only">推荐玩法</legend></fieldset>
-          <button type="button" class="submit" id="confirm-guide" disabled>确认选中的玩法</button>
-        </section>
-      </section>
-
-      <section class="panel itinerary" id="plan-workspace" aria-labelledby="plan-title">
-        <p class="eyebrow">02 / 行程工作台</p>
-        <h2 id="plan-title">你的逐日行程</h2>
-        <p class="muted" id="plan-intro">生成后可查看每一天的安排、转场步行和出发前待确认的事项。</p>
-        <ul class="plan-parts" id="plan-placeholder">
-          <li><span class="step-orb" aria-hidden="true">01</span><div><strong>活动与用餐</strong><small>按上午、下午和晚上查看</small></div></li>
-          <li><span class="step-orb" aria-hidden="true">02</span><div><strong>预算与交通</strong><small>查看预算额度与候选转场</small></div></li>
-          <li><span class="step-orb" aria-hidden="true">03</span><div><strong>待确认事项</strong><small>记录营业、预约和全天步行等未知信息</small></div></li>
-        </ul>
-        <div id="plan-result" hidden></div>
-        <details id="trace" hidden>
-          <summary>查看本次实际调用</summary>
-          <ol id="trace-list"></ol>
-        </details>
-      </section>
-    </div>
-
-    <section class="engineering" id="engineering" aria-labelledby="engineering-title">
-      <p class="eyebrow">03 / 实现方式</p>
-      <h2 id="engineering-title">行程背后的工程设计</h2>
-      <div class="design-grid">
-        <article><h3>导游推荐</h3><p>按城市和已确认条件建议不同的玩法。用户确认后，偏好和搜索词才会交给后续 Agent。</p></article>
-        <article><h3>多轮需求澄清</h3><p>将预算、日期和偏好存成结构化状态。访客回复「不含住宿」时，只更新对应字段。</p></article>
-        <article><h3>多 Agent 与 MCP</h3><p>天气、预算、地点检索各有工具权限。规划使用工具返回的事实，路线检查与内容评审分别记录。</p></article>
-        <article><h3>修订与故障恢复</h3><p>改一顿饭后重新检查相关转场。遇到路线查询失败时保留草案，并支持只重查失败路段。</p></article>
-      </div>
-      <p class="project-note">Python · DeepSeek · MCP · 高德地图 · 9 项离线回归通过</p>
-    </section>
-  </main>
+  <p>智能旅行规划助手的介绍已合并到简历的技术作品中。</p>
+  <p><a href="../?project=travel#projects">查看项目介绍</a></p>
 </body>
 </html>

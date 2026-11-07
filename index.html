@@ -546,23 +546,7 @@ a { color: var(--accent2); text-decoration: none; }
   .section { padding: 52px 18px; }
   .section-title { font-size: 24px; }
 }
-  .hero-travel-link { display: inline-block; margin-top: 10px; padding: 8px 12px; color: var(--accent2); font-size: 13px; font-weight: 650; text-decoration: none; }
-  .hero-travel-link:hover { text-decoration: underline; }
-  .travel-feature { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: 24px; align-items: center; padding: clamp(20px, 4vw, 30px); background: linear-gradient(120deg, var(--accent-glow), transparent 64%), var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--gold); border-radius: var(--radius); }
-  .travel-feature h3 { color: var(--text); margin: 5px 0 8px; font-size: clamp(20px, 3vw, 25px); }
-  .travel-feature p { color: var(--text2); font-size: 14px; line-height: 1.65; }
-  .travel-feature .travel-kicker { color: var(--gold); font-size: 12px; font-weight: 700; }
-  .travel-feature .travel-stack { margin-top: 10px; color: var(--accent2); font-size: 12px; font-weight: 650; }
-  .travel-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin-top: 15px; }
-  .travel-actions a { color: var(--accent2); font-size: 13px; font-weight: 650; text-decoration: none; }
-  .travel-actions .travel-primary { padding: 8px 12px; background: var(--accent); border-radius: 8px; color: white; }
-  .travel-actions a:hover, .travel-sample:hover strong { text-decoration: underline; }
-  .travel-sample { display: block; padding: 16px; background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; text-decoration: none; }
-  .travel-sample span, .travel-sample strong { display: block; }
-  .travel-sample span { color: var(--text2); font-size: 12px; }
-  .travel-sample strong { color: var(--text); margin: 4px 0; font-size: 15px; }
-  .travel-feature a:focus-visible, .hero-travel-link:focus-visible { outline: 2px solid var(--accent2); outline-offset: 4px; }
-  @media (max-width: 620px) { .travel-feature { grid-template-columns: 1fr; gap: 14px; } }
+  .project-card:focus-visible { outline: 2px solid var(--accent2); outline-offset: 4px; }
 </style>
 </head>
 <body>
@@ -607,7 +591,6 @@ a { color: var(--accent2); text-decoration: none; }
     <div class="typewriter-wrap">
       <span class="typing" id="typewriter"></span><span class="cursor"></span>
     </div>
-    <a class="hero-travel-link" href="travel/">体验我的旅行 Agent <span aria-hidden="true">↗</span></a>
   </div>
   <div class="hero-scroll-hint">
     <div class="mouse"></div>
@@ -748,23 +731,14 @@ a { color: var(--accent2); text-decoration: none; }
   <span class="section-badge">05 · 项目</span>
   <h2 class="section-title">技术<span class="hl">作品</span></h2>
   <div class="projects-grid">
-    <article class="travel-feature" aria-labelledby="travel-feature-title">
-      <div>
-        <p class="travel-kicker">特色项目 · Agent 工程</p>
-        <h3 id="travel-feature-title">AI 旅行规划助手</h3>
-        <p>把目的地、预算和步行偏好整理成可调整的逐日行程，并保留地点与路线的查询依据。</p>
-        <p class="travel-stack">Python · DeepSeek · MCP · 高德地图</p>
-        <div class="travel-actions">
-          <a class="travel-primary" href="travel/">打开规划页 <span aria-hidden="true">→</span></a>
-          <a href="travel/#engineering">查看工程设计</a>
-        </div>
-      </div>
-      <a class="travel-sample" href="travel/?scenario=shenzhen#request">
-        <span>推荐起点 · 可编辑示例</span>
-        <strong>深圳周末两日游 <span aria-hidden="true" style="display:inline">↗</span></strong>
-        <span>两人同行，看看博物馆，尝尝本地菜，尽量少走路。</span>
-      </a>
-    </article>
+    <div class="project-card" data-project="travel" role="button" tabindex="0" aria-haspopup="dialog" aria-label="查看智能旅行规划助手 Agent 项目详情"
+         onmousemove="this.style.setProperty('--mx', event.offsetX+'px'); this.style.setProperty('--my', event.offsetY+'px')">
+      <div class="p-icon">🧭</div>
+      <h3>智能旅行规划助手 Agent</h3>
+      <p class="p-tech">Python · DeepSeek · MCP · Pydantic · 多 Agent</p>
+      <p class="p-desc">多 Agent 协作的旅行规划系统，结合高德天气、地点与路线数据，支持导游偏好引导、行程评审、局部修订与失败路段重试。</p>
+      <p class="p-click-hint">👆 点击查看详情</p>
+    </div>
     <div class="project-card" data-project="zhiye"
          onmousemove="this.style.setProperty('--mx', event.offsetX+'px'); this.style.setProperty('--my', event.offsetY+'px')">
       <div class="p-icon">📖</div>
@@ -1133,6 +1107,7 @@ a { color: var(--accent2); text-decoration: none; }
 
   // ====== 项目 Modal ======
   const projectData = {
+    'travel':{title:'智能旅行规划助手 Agent',tech:'Python · DeepSeek · MCP · Pydantic · Starlette',desc:'基于 Python 实现的多 Agent 旅行规划系统。需求 Agent 负责多轮条件澄清，导游 Agent 提供可由用户确认的玩法主题，天气、预算、地点检索 Agent 通过 MCP 获取工具事实，再交给规划与评审流程生成可调整的行程草案。支持网页交互、运行追踪、人工修订及 Markdown 简报导出。',features:['多轮结构化需求管理，区分未知、明确否定与显式清空，保留预算和步行限制','导游 Agent 推荐差异化玩法，用户确认后向后续规划交接偏好与搜索词','通过 MCP 接入高德天气、地点、步行和公交路线工具，按 Agent 分配工具权限','Pydantic 结构校验、路线程序检查与内容评审，保留待核实事项和剩余意见','支持指定活动局部修订及失败路段重试，沿用成功路段的历史证据','模型与工具调用追踪、运行档案和简报导出；9 项离线回归通过，并完成真实服务端到端验收'],link:'#'},
     'zhiye':{title:'知页 · 图文知识问答助手',tech:'Python · FastAPI · DeepSeek · SQLite · RAG · PDF解析',desc:'面向学生、教师和需要阅读专业资料的用户，开发集资料上传、原文检索、多轮问答与引用核对于一体的知识工作台。基于 FastAPI 构建后端，使用 SQLite 保存资料与对话，结合中文全文索引和 DeepSeek 生成带来源的回答。将电子 PDF 中的正文、图注、插图和原页关联展示，让使用者能从答案回到依据。项目同时包含 LangGraph 状态图与 MCP 工具调用等独立工程实验。',features:['支持 UTF-8 TXT、Markdown 和含可提取文字的电子 PDF；单份 PDF 最大 100 MiB、600 页','完成文档解析、自动分块与中文全文索引，可针对当前资料或全部资料提问','支持连续追问与问题改写，每轮重新检索资料，证据不足时明确说明','回答附来源编号，可核对引用原文、PDF 页码及关联插图，并查看原页','使用 SQLite 持久化资料与会话，通过请求编号处理重复提交和失败后的结果查询','对比 BM25、向量、混合检索和重排序，建立开发集、保留集及人工复核流程','完成 LangGraph 分支编排、检查点恢复、人工审核与 MCP 工具调用独立实验','原生前端实现自适应布局、深浅色外观、阅读窗与交互动画'],link:'#'},
     'signal':{title:'基于MATLAB的信号分析工具',tech:'MATLAB · Signal Processing · GUI Design',desc:'电子信息工程课程设计项目。实现完整的音频信号处理流程：时域/频域分析、多种滤波器设计（低通、高通、带通、带阻）、信号可视化与参数调节。',features:['支持 WAV/MP3 音频文件导入与时域波形显示','FFT 频谱分析，可视化频率分量与能量分布','低通/高通/带通/带阻滤波器设计，实时预览滤波效果','MATLAB App Designer 构建交互式 GUI 界面','导出处理后的音频与频谱图'],link:'#'},
     'mcu':{title:'智能温控系统',tech:'STM32F103 · C语言 · DS18B20 · PID算法',desc:'基于 STM32 单片机实现的闭环温度控制系统。采用 DS18B20 传感器采集温度、PID 算法进行精确控制、LCD1602 显示实时数据，支持串口通信与上位机数据记录。',features:['DS18B20 数字温度传感器，精度 ±0.5°C','PID 控制算法实现 ±0.3°C 稳态精度','LCD1602 实时显示设定温度、当前温度、输出功率','USART 串口通信，上位机实时监控与数据记录','PWM 驱动加热模块，实现无级功率调节'],link:'#'},
@@ -1166,6 +1141,11 @@ a { color: var(--accent2); text-decoration: none; }
   });
 
   function closeModal(){modalOverlay.classList.remove('open');document.body.style.overflow='';}
+  const travelCard = document.querySelector('[data-project="travel"]');
+  travelCard.addEventListener('keydown', e => {
+    if(e.key==='Enter'||e.key===' '){e.preventDefault();travelCard.click();}
+  });
+  if(new URLSearchParams(location.search).get('project')==='travel') travelCard.click();
   modalClose.addEventListener('click',closeModal);
   modalOverlay.addEventListener('click',e=>{if(e.target===modalOverlay)closeModal();});
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modalOverlay.classList.contains('open'))closeModal();});
