@@ -765,6 +765,14 @@ a { color: var(--accent2); text-decoration: none; }
         <span>两人同行，看看博物馆，尝尝本地菜，尽量少走路。</span>
       </a>
     </article>
+    <div class="project-card" data-project="zhiye"
+         onmousemove="this.style.setProperty('--mx', event.offsetX+'px'); this.style.setProperty('--my', event.offsetY+'px')">
+      <div class="p-icon">📖</div>
+      <h3>知页 · 图文知识问答助手</h3>
+      <p class="p-tech">Python · FastAPI · DeepSeek · SQLite · RAG</p>
+      <p class="p-desc">围绕学习资料与教培讲义开发的文档问答应用，支持电子PDF解析、多轮追问、图文关联和原文引用核对，完成从上传、检索到回答与评测的完整流程。</p>
+      <p class="p-click-hint">👆 点击查看详情</p>
+    </div>
     <div class="project-card" data-project="signal"
          onmousemove="this.style.setProperty('--mx', event.offsetX+'px'); this.style.setProperty('--my', event.offsetY+'px')">
       <div class="p-icon">📡</div>
@@ -1125,6 +1133,7 @@ a { color: var(--accent2); text-decoration: none; }
 
   // ====== 项目 Modal ======
   const projectData = {
+    'zhiye':{title:'知页 · 图文知识问答助手',tech:'Python · FastAPI · DeepSeek · SQLite · RAG · PDF解析',desc:'面向学生、教师和需要阅读专业资料的用户，开发集资料上传、原文检索、多轮问答与引用核对于一体的知识工作台。基于 FastAPI 构建后端，使用 SQLite 保存资料与对话，结合中文全文索引和 DeepSeek 生成带来源的回答。将电子 PDF 中的正文、图注、插图和原页关联展示，让使用者能从答案回到依据。项目同时包含 LangGraph 状态图与 MCP 工具调用等独立工程实验。',features:['支持 UTF-8 TXT、Markdown 和含可提取文字的电子 PDF；单份 PDF 最大 100 MiB、600 页','完成文档解析、自动分块与中文全文索引，可针对当前资料或全部资料提问','支持连续追问与问题改写，每轮重新检索资料，证据不足时明确说明','回答附来源编号，可核对引用原文、PDF 页码及关联插图，并查看原页','使用 SQLite 持久化资料与会话，通过请求编号处理重复提交和失败后的结果查询','对比 BM25、向量、混合检索和重排序，建立开发集、保留集及人工复核流程','完成 LangGraph 分支编排、检查点恢复、人工审核与 MCP 工具调用独立实验','原生前端实现自适应布局、深浅色外观、阅读窗与交互动画'],link:'#'},
     'signal':{title:'基于MATLAB的信号分析工具',tech:'MATLAB · Signal Processing · GUI Design',desc:'电子信息工程课程设计项目。实现完整的音频信号处理流程：时域/频域分析、多种滤波器设计（低通、高通、带通、带阻）、信号可视化与参数调节。',features:['支持 WAV/MP3 音频文件导入与时域波形显示','FFT 频谱分析，可视化频率分量与能量分布','低通/高通/带通/带阻滤波器设计，实时预览滤波效果','MATLAB App Designer 构建交互式 GUI 界面','导出处理后的音频与频谱图'],link:'#'},
     'mcu':{title:'智能温控系统',tech:'STM32F103 · C语言 · DS18B20 · PID算法',desc:'基于 STM32 单片机实现的闭环温度控制系统。采用 DS18B20 传感器采集温度、PID 算法进行精确控制、LCD1602 显示实时数据，支持串口通信与上位机数据记录。',features:['DS18B20 数字温度传感器，精度 ±0.5°C','PID 控制算法实现 ±0.3°C 稳态精度','LCD1602 实时显示设定温度、当前温度、输出功率','USART 串口通信，上位机实时监控与数据记录','PWM 驱动加热模块，实现无级功率调节'],link:'#'},
     'agent':{title:'电子工程AI学习助手 Agent',tech:'Dify · DeepSeek · RAG · Multi-Agent · LLM-as-Judge · Reflexion',desc:'基于 Dify Chatflow + DeepSeek 搭建的多 Agent 协作 AI 助教系统。实现「意图识别 → 知识库检索 → 5专家并行调度 → 回答整合 → 质量评测 → 自我反思」的完整闭环架构，覆盖深大电子工程核心课程，支持 MATLAB/C 代码生成。创新引入 LLM-as-Judge 自动评测体系（4维评分+金标准锚定）与 Reflexion 自我优化回路（评分<16自动反思重试），保证输出质量基线。从 0 完成 DSL 配置、知识库搭建、Prompt 工程、评测体系、测试验证全流程。',features:['10+ LLM 节点协作流水线：分类→检索→5专家→整合→评测→反思','5 领域意图自动分类（电路/信号/单片机/通信/学习规划）','LLM-as-Judge 4维自动评分：准确性/完整性/可用性/成本效率','知识库金标准锚定：评分对照教材原文，拒绝主观臆断','Reflexion 自我优化回路：评分不达标自动反思重试，质量闭环','DeepSeek-chat 驱动，单次对话成本仅 ¥0.02-0.08','YAML DSL 一键导入 Dify，含知识库素材与测试用例'],link:'https://cloud.dify.ai/explore/installed/b0570a7d-d479-4560-8069-adfbe9418868'},
